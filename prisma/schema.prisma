@@ -12,15 +12,14 @@ model User {
   name     String?
   email    String   @unique
   password String
-  posts    Post[]
+  posts    Post[]   @relation("UserPosts")
 }
 
 model Post {
-  id       String     @id @default(auto()) @map("_id") @db.ObjectId
-  slug     String     @unique
+  id       String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug     String   @unique
   title    String
   body     String
-  author   User       @relation(fields: [authorId], references: [id])
-  authorId String     @db.ObjectId
+  author   User     @relation(fields: [authorId], references: [id], name: "UserPosts")
+  authorId String   @db.ObjectId
 }
-
